@@ -12,9 +12,4 @@ function PlayerDataController:KnitStart()
     self.PlayerDataService = Knit.GetService("PlayerDataService")
 end
 
-function PlayerDataController:LoadPlayer(Player: Player)
-
-    self.PlayerDataService:RequestDataStore(Player)
-end
-
 return PlayerDataController
