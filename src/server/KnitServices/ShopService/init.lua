@@ -13,9 +13,10 @@ function ShopService:KnitInit()
     -- Pull the data for the items to be displayed in the store
 
     self.Object:FeedData(ShopData)
+    self.Object:Display()
 end
 
 function ShopService:KnitStart()
     -- Populate the GUI with the items
-
+    -- Handled by client?
 end

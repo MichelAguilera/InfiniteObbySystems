@@ -23,4 +23,8 @@ function Shop.CreateItem(item)
     ItemClass.new(item)
 end
 
+function Shop:Display()
+    print(self.Items)
+end
+
 return Shop
