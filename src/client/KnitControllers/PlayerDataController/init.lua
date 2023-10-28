@@ -12,4 +12,8 @@ function PlayerDataController:KnitStart()
     self.PlayerDataService = Knit.GetService("PlayerDataService")
 end
 
+function PlayerDataController:PurchaseItemWithCoin(Player: Player)
+    
+end
+
 return PlayerDataController

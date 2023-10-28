@@ -1,5 +1,6 @@
 local Knit = require(game:GetService("ReplicatedStorage"):WaitForChild("Packages").knit)
 local PlayerType = require(script.PlayerType)
+local ItemType = require(script.Parent.ShopService.ItemType)
 local DataStoreService = game:GetService("DataStoreService")
 local KEY = "TEMP_HOOLIGAN_IN_THE_TRUNK"
 local Config = require(script.config)
@@ -51,7 +52,7 @@ function PlayerDataService:InitDataStore(Player: Player)
         local success: boolean, errorMessage: string = pcall(function()
             self.DataStore:SetAsync(Player.UserId, Config.DEFAULT)
         end)
-        
+
         return {success = success, errorMessage = errorMessage}
     end
 
@@ -88,10 +89,71 @@ function PlayerDataService:LoadPlayerInfo(Player: Player)
     self.Players[Player.UserId] = PlayerData
 end
 
--- CLIENT EXPOSED FUNCTIONS -- MAY BE REMOVED
-function PlayerDataService.Client:RequestDataStore(Player: Player)
-    warn(`{Player.Name} is REQUESTING a DataStore`)
-    self.Server:LoadPlayerInfo(Player)
+-- Data movers
+-- POST
+function PlayerDataService:POST(Player: Player, key: number, value: table): boolean
+    local success = pcall(function()
+        self.Players[Player.UserId]['UNLOCKED_LIST'][key] = value
+    end)
+    return success
+end
+
+-- UPDATE (Right now it's identical to POST, might delete)
+function PlayerDataService:UPDATE(Player: Player, key: number, value: table): boolean
+    local success = pcall(function()
+        self.Players[Player.UserId]['UNLOCKED_LIST'][key] = value
+    end)
+    return success
+end
+
+-- GET
+function PlayerDataService:GET(Player: Player, key: number): ItemType.Item
+    local success, data = pcall(function()
+        return self.Players[Player.UserId]['UNLOCKED_LIST'][key]
+    end)
+    if success then return data end
+end
+
+-- DELETE
+function PlayerDataService:DELETE(Player: Player, key: number): boolean
+    self.Players[Player.UserId]['UNLOCKED_LIST'][key] = nil
+
+    local success, number = pcall(function()
+        return table.find(self.Players[Player.UserId], self.Players[Player.UserId][key])
+    end)
+
+    if success then
+        if number ~= nil then
+            return false
+        else
+            return true
+        end
+    end
+end
+
+-- CLIENT EXPOSED
+function PlayerDataService.Client:HandleDataRequest(Player: Player, Method: string, Args: table)
+    if Player == nil or Method == nil or Args == nil then return {false, "ERROR (SERVER::HandleDataRequest) At least one argument was nil"} end
+
+    local Response = nil
+
+    if Method == "POST" then
+        Response = PlayerDataService.Server:POST(Player, Args.key, Args.value)
+    end
+
+    if Method == "UPDATE" then
+        Response = PlayerDataService.Server:UPDATE(Player, Args.key, Args.value)
+    end
+
+    if Method == "GET" then
+        Response = PlayerDataService.Server:GET(Player, Args.key)
+    end
+
+    if Method == "DELETE" then
+        Response = PlayerDataService.Server:DELETE(Player, Args.key)
+    end
+
+    return Response
 end
 
 return PlayerDataService
