@@ -6,7 +6,7 @@
 export type PlayerData = {
     USER_NAME: string,
     USER_ID: number,
-    UNLOCKED_LIST: {number}
+    UNLOCKED_LIST: {number}?
 }
 
 local PlayerData: table = {}

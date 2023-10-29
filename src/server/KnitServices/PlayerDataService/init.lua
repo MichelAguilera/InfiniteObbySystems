@@ -1,9 +1,14 @@
+--!strict
+
+-- These variables are going to make me puke
+local Players = game:GetService("Players")
 local Knit = require(game:GetService("ReplicatedStorage"):WaitForChild("Packages").knit)
 local PlayerType = require(script.PlayerType)
 local ItemType = require(script.Parent.ShopService.ItemType)
-local DataStoreService = game:GetService("DataStoreService")
-local KEY = "TEMP_HOOLIGAN_IN_THE_TRUNK"
+-- local DataStoreService = game:GetService("DataStoreService") -- REPLACED WITH SUPHI'S DATASTORE
+local SuphiDataStore = require(game:GetService("ReplicatedStorage"):WaitForChild("Packages").suphisdatastoremodule)
 local Config = require(script.config)
+local UtilityFunctions = require(game:GetService("ServerScriptService"):WaitForChild("Server").UtilityFunctions)
 
 local PlayerDataService = Knit.CreateService {
     Name = "PlayerDataService",
@@ -15,65 +20,50 @@ local PlayerDataService = Knit.CreateService {
 -- Runs before KnitStart(), ensures data is Loaded before running
 function PlayerDataService:KnitInit()
     -- Get DataStore reference
-    self.DataStore = DataStoreService:GetDataStore(KEY)
+    self.DataStore = SuphiDataStore.new(Config.KEY, "PlayerData")
+
+    -- Create PlayerJoined listener; to add their ID to the cache automatically
+    Players.PlayerAdded:Connect(function(Player)
+        self:OnPlayerJoined(Player)
+    end)
+end
+
+function PlayerDataService:KnitStart()
+    -- DEBUG
+    -- self:QueryDataStore()
+end
+
+function PlayerDataService:OnPlayerJoined(Player: Player)
+    -- Create template for server data in self.Players
+    local PlayersDataTemplate: PlayerType.PlayerData = {
+        USER_NAME = Player.Name,
+        USER_ID = Player.UserId,
+        UNLOCKED_LIST = nil
+    }
+
+    -- Apperently the ID needs to be a string in order to be insertable
+    -- (thanks Lua, I spent far too long trying to figure that out)
+    -- local UserIdIndex = 
+    
+    -- Stores the return of the query in the Template.UNLOCKED_LIST
+    PlayerDataService['UNLOCKED_LIST'] = self:QueryDataStore(Player)
 end
 
 -- Queries the DataStore with the User ID
 function PlayerDataService:QueryDataStore(Player: Player): table
-    local UserId: number = Player.UserId
-    local Data: {number} = nil
+    
+    local DataStoreTemplate: {UnlockedItems: {number}} = {
+        [tostring(Player.UserId)] = {}
+    }
+    self.DataStore:Open(DataStoreTemplate)
+    print(self.DataStore.Value)
+    DataStoreTemplate.UnlockedItems = self.DataStore.Value[tostring(Player.UserId)]
 
-    local function attempt_query(): {success: boolean, data: table}
-        local success: boolean, data: table = pcall(function()
-            Data = self.DataStore:GetAsync(UserId)
-        end)
-
-        return {success = success, data = data}
-    end
-
-    -- If query fails, create new DataStore entry
-    local query_result: {success :boolean, data: table} = attempt_query()
-
-    -- Create new DataStore entry if not able to get()
-    if not query_result.success then
-        warn("(QueryDataStore) Unable to pull data from the DataStore, creating new entry")
-        self:InitDataStore(Player)
-        Data = Config.DEFAULT
-    else
-        Data = query_result.data
-    end
-
-    return Data
 end
 
 -- Creates new entry in the DataStore if player info has not been saved
 function PlayerDataService:InitDataStore(Player: Player)
-    local function set()
-        local success: boolean, errorMessage: string = pcall(function()
-            self.DataStore:SetAsync(Player.UserId, Config.DEFAULT)
-        end)
 
-        return {success = success, errorMessage = errorMessage}
-    end
-
-    -- If set fails, retry after 3 seconds
-    local set_tries = 0
-    while true do
-        local set_result: {success :boolean, errorMessage: string} = set()
-        print(set_result)
-
-        if not set_result.success and set_tries < 5 then
-            set_tries += 1
-            warn(`(InitDataStore) {set_result.errorMessage} :: Unable to set data to the DataStore, retrying...`)
-            task.wait(3)
-        elseif set_tries >= 5 then
-            Player.Kick(Player, "Unable to set data to DataStore, please rejoin.")
-            break
-        else
-            set_tries = 0
-            break
-        end
-    end
 end
 
 -- Add the data from the DataStore into the PlayerDataService cache
@@ -84,9 +74,11 @@ function PlayerDataService:LoadPlayerInfo(Player: Player)
         UNLOCKED_LIST = nil
     }
 
+    --[[
     PlayerData.UNLOCKED_LIST = self:QueryDataStore(Player)
 
     self.Players[Player.UserId] = PlayerData
+    ]]
 end
 
 -- Data movers

@@ -16,8 +16,8 @@
       "Server": {
         "$path": "src/server"
       },
-      "Utility": {
-        "$path": "Utility"
+      "Debug": {
+        "$path": "debug"
       }
     },
 

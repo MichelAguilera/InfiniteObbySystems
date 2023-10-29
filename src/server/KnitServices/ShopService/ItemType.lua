@@ -10,7 +10,7 @@ export type Item = {
     IMAGE_ID: string, 
     PROPERTIES: table, 
     COST_RBX: number, 
-    COST_COIN: number
+    COST_POINT: number
 }
 
 local Item: table = {}
@@ -20,7 +20,7 @@ function Item.GetDescriptor(item: Item): string
 end
 
 function Item.GetCosts(item: Item): table
-    return {item.ID, item.COST_RBX, item.COST_COIN}
+    return {item.ID, item.COST_RBX, item.COST_POINT}
 end
 
 return Item
