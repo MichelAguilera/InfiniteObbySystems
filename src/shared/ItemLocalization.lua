@@ -1,6 +1,6 @@
 local ItemLocalization = {
 
-    [1] = {
+    ["1"] = {
         ID = 1,
         NAME = "Example",
         DESCRIPTION = "This is an example item",

@@ -38,8 +38,8 @@ function PlayerDataService:OnPlayerJoined(Player: Player)
     local PlayersDataTemplate: PlayerType.PlayerData = {
         USER_NAME = Player.Name,
         USER_ID = tostring(Player.UserId),
-        -- USER_DATA = Config.DEBUG_USER_DATA
-        USER_DATA = Config.DEFAULT_USER_DATA
+        USER_DATA = Config.DEBUG_USER_DATA
+        -- USER_DATA = Config.DEFAULT_USER_DATA
     }
 
     self.Players[tostring(Player.UserId)] = self:QueryDataStore(Player, PlayersDataTemplate)

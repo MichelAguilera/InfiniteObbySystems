@@ -18,6 +18,7 @@ function Item.new(args)
     -- Lifecycle
     self.State = nil -- nil is inactive
     self.IsEquipped = false
+    self.Amount = if args.AMOUNT then args.AMOUNT else 1
 
     return self
 end
@@ -30,10 +31,6 @@ function Item:Cooldown()
     self:ChangeState("COOLDOWN")
     task.wait(self.Properties.COOLDOWN)
     self:ChangeState(nil)
-end
-
-function Item:Equip()
-    
 end
 
 return Item

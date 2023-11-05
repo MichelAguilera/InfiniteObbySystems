@@ -1,7 +1,7 @@
 local PlayerType = require(script.Parent.PlayerType)
 
 local config = {
-    KEY = "lkasdi",
+    KEY = "newsdasdafags",
     DEFAULT_USER_DATA = {
         ["UNLOCKED_LIST"] = {},
         ["INVENTORY"] = {}
@@ -9,8 +9,7 @@ local config = {
     DEBUG_USER_DATA = {
         ["UNLOCKED_LIST"] = {"10", "30", "90"},
         ["INVENTORY"] = {
-            {["ID"] = "45", ["AMOUNT"] = 3},
-            {["ID"] = "37", ["AMOUNT"] =90}
+            {["ID"] = "1", ["AMOUNT"] = 3}
         }
     }
 }
