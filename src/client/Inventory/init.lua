@@ -1,4 +1,4 @@
-local ItemClass = require()
+local ItemClass = require(script.Item)
 
 local Inventory = {}
 Inventory.__index = Inventory
