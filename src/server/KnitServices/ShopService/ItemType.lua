@@ -3,7 +3,7 @@
     which I used as reference for this Type architecture.
 ]]
 
-export type Item = {
+export type ShopItem = {
     ID: string,
     NAME: string, 
     DESCRIPTION: string, 
@@ -15,11 +15,11 @@ export type Item = {
 
 local Item: table = {}
 
-function Item.GetDescriptor(item: Item): string
+function Item.GetDescriptor(item: ShopItem): string
     return `{item.ID}, {item.NAME}, {item.DESCRIPTION}`
 end
 
-function Item.GetCosts(item: Item): table
+function Item.GetCosts(item: ShopItem): table
     return {item.ID, item.COST_RBX, item.COST_POINT}
 end
 

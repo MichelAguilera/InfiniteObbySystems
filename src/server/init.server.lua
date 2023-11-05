@@ -8,7 +8,7 @@ Knit.Start():catch(warn)
 
 local PlayerDataService = Knit.GetService("PlayerDataService")
 
-Players.PlayerAdded:Connect(function(Player: Player)
-    -- print("Players.PlayerAdded", Player.Name)
-    PlayerDataService:LoadPlayerInfo(Player)
-end)
+-- Players.PlayerAdded:Connect(function(Player: Player)
+--     -- print("Players.PlayerAdded", Player.Name)
+--     -- PlayerDataService:LoadPlayerInfo(Player)
+-- end)
