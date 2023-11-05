@@ -5,7 +5,7 @@ Item.__index = Item
 
 function Item.new(args)
     local self = setmetatable({}, Item)
-
+    -- Meta
     self.Id             = args.ID
     --------------------------------------------------------------
     self.Name           = ItemLocalization[self.Id]["NAME"]
