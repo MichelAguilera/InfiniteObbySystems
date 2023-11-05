@@ -11,3 +11,5 @@ local ItemLocalization = {
     }
 
 }
+
+return ItemLocalization
