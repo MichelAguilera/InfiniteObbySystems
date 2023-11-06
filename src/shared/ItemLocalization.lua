@@ -5,7 +5,7 @@ local ItemLocalization = {
         NAME = "Example",
         DESCRIPTION = "This is an example item",
         IMAGE_ID = "<Link to roblox asset>",
-        MODEL_3D = "Name of the model in-game",
+        MODEL_3D = "Example",
         PROPERTIES = {"Table of properties"},
         COST = "NUMBER: Cost of item in Robux (automatically converted to points)"
     }

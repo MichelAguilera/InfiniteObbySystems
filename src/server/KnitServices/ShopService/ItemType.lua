@@ -5,12 +5,11 @@
 
 export type ShopItem = {
     ID: string,
-    NAME: string, 
-    DESCRIPTION: string, 
-    IMAGE_ID: string, 
-    PROPERTIES: table, 
-    COST_RBX: number, 
-    COST_POINT: number
+    NAME: string,
+    DESCRIPTION: string,
+    IMAGE_ID: string,
+    PROPERTIES: table,
+    COST: number
 }
 
 local Item: table = {}

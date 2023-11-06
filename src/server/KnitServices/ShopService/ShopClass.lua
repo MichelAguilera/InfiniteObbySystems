@@ -20,15 +20,14 @@ function Shop:FeedData(Data: table)
 end
 
 function Shop.CreateItem(itemData: table)
-    local item: ItemType.Item = {
-        ID = itemData.ID,
-        NAME = itemData.NAME, 
-        DESCRIPTION = itemData.DESCRIPTION, 
-        IMAGE_ID = itemData.IMAGE_ID, 
-        MODEL_3D = itemData.MODEL_3D, 
-        PROPERTIES = itemData.PROPERTIES, 
-        COST_RBX = itemData.COST_RBX, 
-        COST_COIN = itemData.COST_COIN
+    local item: ItemType.ShopItem = {
+        ID          = itemData.ID,
+        NAME        = itemData.NAME,
+        DESCRIPTION = itemData.DESCRIPTION,
+        IMAGE_ID    = itemData.IMAGE_ID,
+        MODEL_3D    = itemData.MODEL_3D,
+        PROPERTIES  = itemData.PROPERTIES,
+        COST        = itemData.COST
     }
     return item
 end
