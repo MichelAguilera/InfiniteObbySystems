@@ -11,6 +11,14 @@ function Inventory.new(player: Player, args: table)
     return self
 end
 
+function Inventory:ExportInventory()
+    local serializedData = {}
+    for _, item in pairs() do
+        serializedData[_] = item:serialize()
+    end
+    return serializedData
+end
+
 function Inventory.PopulateInventory(player: Player, items: table)
     local PopulatedInventory = {}
 

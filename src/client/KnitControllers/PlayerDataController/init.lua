@@ -23,4 +23,10 @@ function PlayerDataController:GetUserData()
     return UserData
 end
 
+function PlayerDataController:SendUserData()
+
+    local data
+    self.PlayerDataService.RetrieveClientSideData:Fire(data)
+end
+
 return PlayerDataController

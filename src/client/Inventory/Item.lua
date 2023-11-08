@@ -33,4 +33,8 @@ function Item:Cooldown()
     self:ChangeState(nil)
 end
 
+function Item:serialize()
+    return {self.Id, self.Amount}
+end
+
 return Item

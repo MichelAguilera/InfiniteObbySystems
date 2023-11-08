@@ -18,6 +18,8 @@ local usrdata = PlayerDataController:GetUserData()
 local Inventory = InventoryClass.new(player, usrdata)
 local ToolHandler = ToolClass.new(player)
 
+-- MOVE INVENTORY INTO THE CONTROLLER FOR EASIER PASSING OF INVENTORY OBJECT REFERENCE TO THE SERVER
+
 -- Inventory:repr()
 -- Inventory:UseItem("1")
 -- Inventory:repr()
