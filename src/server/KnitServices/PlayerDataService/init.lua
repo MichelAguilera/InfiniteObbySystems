@@ -22,7 +22,7 @@ local PlayerDataService = Knit.CreateService {
 
 -- Runs before KnitStart(), ensures data is Loaded before running
 function PlayerDataService:KnitInit()
-    -- Get DataStore reference
+    -- Get DataStore reference in versioned PlayerData
     self.DataStore = SuphiDataStore.new(Config.KEY, "PlayerData"..Config.VER)
 
     -- Create PlayerJoined listener; to add their ID to the cache automatically
