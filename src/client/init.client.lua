@@ -1,4 +1,4 @@
-local InventoryClass = require(script.Inventory)
+-- local InventoryClass = require(script.Inventory)
 local ToolClass = require(script.ToolClass)
 local player = game:GetService("Players").LocalPlayer
 
@@ -28,5 +28,7 @@ local ToolHandler = ToolClass.new(player)
 -- Inventory:EquipItem(player, "1")
 -- Inventory:InitiateCooldown("1")
 task.wait(5)
-PlayerDataController:DEBUG_EquipItem()
+local Inventory = PlayerDataController:GetInventoryObject()
+task.wait(1)
+print(Inventory:ExportInventory())
 -- Inventory:UnequipItem(player, "1")

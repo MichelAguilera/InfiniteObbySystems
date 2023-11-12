@@ -13,7 +13,7 @@ end
 
 function Inventory:ExportInventory()
     local serializedData = {}
-    for _, item in pairs() do
+    for _, item in pairs(self.Inventory) do
         serializedData[_] = item:serialize()
     end
     return serializedData

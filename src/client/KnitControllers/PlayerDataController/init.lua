@@ -16,8 +16,8 @@ function PlayerDataController:KnitStart()
     self.Inventory = InventoryClass.new(player, self:GetUserData())
 end
 
-function PlayerDataController:DEBUG_EquipItem()
-    self.Inventory:EquipItem(player, "1")
+function PlayerDataController:GetInventoryObject()
+    return self.Inventory
 end
 
 function PlayerDataController:GetUserData()
