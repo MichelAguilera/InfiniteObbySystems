@@ -27,7 +27,7 @@ function PlayerDataController:GetUserData()
         UserData = ServerData.USER_DATA
     end)
 
-    task.wait(2)
+    task.wait(2) -- Question to self, why the fuck is there a wait here??
     return UserData
 end
 
