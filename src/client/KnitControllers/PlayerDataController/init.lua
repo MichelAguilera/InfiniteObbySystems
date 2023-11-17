@@ -32,8 +32,7 @@ function PlayerDataController:GetUserData()
 end
 
 function PlayerDataController:SendUserData()
-    local data = self.Inventory
-    self.PlayerDataService.RetrieveClientSideData:Fire(data)
+    self.PlayerDataService.RetrieveClientSideData:Fire(self.Inventory)
 end
 
 return PlayerDataController

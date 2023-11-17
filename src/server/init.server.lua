@@ -1,5 +1,3 @@
-print("Hello world, from server!")
-
 local Players = game:GetService("Players")
 local Knit = require(game:GetService("ReplicatedStorage"):WaitForChild("Packages").knit)
 

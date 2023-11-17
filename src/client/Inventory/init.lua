@@ -1,4 +1,5 @@
 local ItemClass = require(script.Item)
+local player: Player = game:GetService("Players").LocalPlayer
 
 local Inventory = {}
 Inventory.__index = Inventory
@@ -11,6 +12,7 @@ function Inventory.new(player: Player, args: table)
     return self
 end
 
+-- Convert item objects into serialized tuples for the database
 function Inventory:ExportInventory()
     local serializedData = {}
     for _, item in pairs(self.Inventory) do
@@ -19,6 +21,7 @@ function Inventory:ExportInventory()
     return serializedData
 end
 
+-- Convert database tuples into item objects
 function Inventory.PopulateInventory(player: Player, items: table)
     local PopulatedInventory = {}
 
@@ -34,7 +37,8 @@ function Inventory.PopulateInventory(player: Player, items: table)
     return PopulatedInventory
 end
 
-function Inventory:EquipItem(player: Player, ItemId: string)
+-- Creates flags for items currently in hotbar
+function Inventory:EquipItem(ItemId: string)
     local _item = self.Inventory[ItemId]
     if _item.IsEquipped == false then
         _item.IsEquipped = true
@@ -46,6 +50,7 @@ function Inventory:EquipItem(player: Player, ItemId: string)
     end
 end
 
+-- Removes the flag from the hotbar
 function Inventory:UnequipItem(player: Player, ItemId: string)
     local _item = self.Inventory[ItemId]
     if _item.State ~= "COOLDOWN" and _item.IsEquipped then
@@ -57,6 +62,7 @@ function Inventory:UnequipItem(player: Player, ItemId: string)
     end
 end
 
+-- Item use, reduces amount by 1
 function Inventory:UseItem(ItemId: string)
     local _item = self.Inventory[ItemId]
     _item.Amount -= 1
@@ -66,15 +72,18 @@ function Inventory:UseItem(ItemId: string)
     end
 end
 
+-- Initiates item cooldown (not sure if this method is necessary)
 function Inventory:InitiateCooldown(ItemId: string)
     local _item = self.Inventory[ItemId]
     _item:Cooldown()
 end
 
+-- Deletes item from memory
 function Inventory:RemoveItem(ItemId: string)
     self.Inventory[ItemId] = nil
 end
 
+-- Prints the inventory array
 function Inventory:repr()
     print(self)
 end

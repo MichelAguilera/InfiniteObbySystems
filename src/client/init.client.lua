@@ -16,7 +16,6 @@ task.wait(2)
 -- local usrdata = PlayerDataController:GetUserData()
 -- print("usrdata", usrdata)
 -- local Inventory = InventoryClass.new(player, usrdata) MOVED TO PlayerDataController
-print("Initializing tool ghandler")
 local ToolHandler = ToolClass.new(player)
 
 -- MOVE INVENTORY INTO THE CONTROLLER FOR EASIER PASSING OF INVENTORY OBJECT REFERENCE TO THE SERVER
@@ -30,5 +29,6 @@ local ToolHandler = ToolClass.new(player)
 task.wait(5)
 local Inventory = PlayerDataController:GetInventoryObject()
 task.wait(1)
-print(Inventory:ExportInventory())
+Inventory:EquipItem("1")
+-- print(Inventory:ExportInventory())
 -- Inventory:UnequipItem(player, "1")
