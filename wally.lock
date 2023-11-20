@@ -10,7 +10,12 @@ dependencies = []
 [[package]]
 name = "michelaguilera/infiniteobbysystems"
 version = "0.1.0"
-dependencies = [["knit", "sleitnick/knit@1.5.3"], ["suphisdatastoremodule", "skylord-103/suphisdatastoremodule@1.0.0"]]
+dependencies = [["knit", "sleitnick/knit@1.5.3"], ["roact", "roblox/roact@1.4.4"], ["suphisdatastoremodule", "skylord-103/suphisdatastoremodule@1.0.0"]]
+
+[[package]]
+name = "roblox/roact"
+version = "1.4.4"
+dependencies = []
 
 [[package]]
 name = "skylord-103/suphisdatastoremodule"

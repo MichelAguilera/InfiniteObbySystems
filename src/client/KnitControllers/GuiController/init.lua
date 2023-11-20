@@ -1,3 +1,5 @@
+--[[
+
 local player = game:GetService("Players").LocalPlayer
 local config = require(script.Parent.LocalConfig)
 local CollectionService = game:GetService("CollectionService")
@@ -34,14 +36,23 @@ function GuiController:KnitInit()
     })
 end
 
+function GuiController:KnitStart()
+    self:ConnectGuiRoot()
+    task.wait(0.5)
+    self:AttachListeners()
+    self:TagButton()
+end
+
 -- Initial methods
 function GuiController:ConnectGuiRoot()
+    print("Connecting Gui root to Controller")
     -- Attempts to set GuiRoot
     self.GuiRoot = player.PlayerGui:WaitForChild(config.GuiRootName)
 
     if self.GuiRoot ~= nil then
         return
     else -- Tries again if it fails
+        warn("GUI ROOT FAILED TO CONNECT :: RETRYING IN 3 SECONDS")
         task.wait(3)
         self:ConnectGuiRoot()
     end
@@ -49,6 +60,7 @@ end
 
 -- Attach listeners to frames that hold the Item buttons in the Inventory and Store GUI menus
 function GuiController:AttachListeners()
+    print("Attaching Listeners to Gui")
     local function AttachListener(host: GuiObject)
         host.ChildAdded:Connect(function(child)
             self:TagButton(child)
@@ -70,7 +82,8 @@ end
 function GuiController:TagButton(button: GuiButton)
     local function TagButton(instance: GuiButton, tag: string)
         if instance.ClassName == "TextButton" or instance.ClassName == "ImageButton" then
-            CollectionService.AddTag(instance, tag)
+            print(`TAGGING {instance} with {tag}`)
+            CollectionService:AddTag(instance, tag)
         end
     end
 
@@ -85,7 +98,7 @@ function GuiController:TagButton(button: GuiButton)
 end
 
 function GuiController:RefreshComponent(component: Instance, props: Properties)
-    local newComponent = component.Clone()
+    local newComponent = component:Clone()
 
     -- Modify clone with new values
     for _, property in pairs(props) do
@@ -97,3 +110,7 @@ function GuiController:RefreshComponent(component: Instance, props: Properties)
 end
 
 return GuiController
+
+]]
+
+return nil

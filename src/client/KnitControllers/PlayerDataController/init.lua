@@ -3,36 +3,36 @@ local InventoryClass = require(player.PlayerScripts:WaitForChild("Client").Inven
 
 local Knit = require(game:GetService("ReplicatedStorage"):WaitForChild("Packages").knit)
 
-local PlayerDataController = Knit.CreateController {
-    Name = "PlayerDataController",
-    PlayerDataService = nil,
-    Inventory = nil
-}
+local PlayerDataController = Knit.CreateController({
+	Name = "PlayerDataController",
+	PlayerDataService = nil,
+	Inventory = nil,
+})
 
 function PlayerDataController:KnitStart()
-    self.PlayerDataService = Knit.GetService("PlayerDataService")
+	self.PlayerDataService = Knit.GetService("PlayerDataService")
 
-    task.wait(2)
-    self.Inventory = InventoryClass.new(player, self:GetUserData())
+	task.wait(2)
+	self.Inventory = InventoryClass.new(player, self:GetUserData())
 end
 
 function PlayerDataController:GetInventoryObject()
-    return self.Inventory
+	return self.Inventory
 end
 
 function PlayerDataController:GetUserData()
-    local UserData: table = nil
+	local UserData: table = nil
 
-    self.PlayerDataService:ReplicateToClient(player):andThen(function(ServerData)
-        UserData = ServerData.USER_DATA
-    end)
+	self.PlayerDataService:ReplicateToClient(player):andThen(function(ServerData)
+		UserData = ServerData.USER_DATA
+	end)
 
-    task.wait(2) -- Question to self, why the fuck is there a wait here??
-    return UserData
+	task.wait(2) -- Question to self, why the fuck is there a wait here??
+	return UserData
 end
 
 function PlayerDataController:SendUserData()
-    self.PlayerDataService.RetrieveClientSideData:Fire(self.Inventory)
+	self.PlayerDataService.RetrieveClientSideData:Fire(self.Inventory)
 end
 
 return PlayerDataController
